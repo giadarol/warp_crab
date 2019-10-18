@@ -1,14 +1,25 @@
+import sys
+import time
+from io import BytesIO
+
+import matplotlib.pyplot as plt
 import numpy as np
 import numpy.random as random
-#from pywarpx import picmi
-from warp import picmi
-from scipy.stats import gaussian_kde
-from warp.particles.Secondaries import *
-import matplotlib.pyplot as plt
-import parser
-import scipy.io as sio
-from io import BytesIO as StringIO
 from mpi4py import MPI
+from scipy.stats import gaussian_kde
+import scipy.io as sio
+
+import warp
+from warp import picmi
+from warp import top
+# from from warp.particles.Secondaries import *
+# from warp.particles.Secondaries import Secondaries, top, warp, posC, sys, time
+from warp.particles.Secondaries import Secondaries, posC
+
+import parser
+
+
+
 ##########################
 # physics parameters
 ##########################
@@ -23,10 +34,10 @@ unit = 1e-3
 ##########################
 
 # --- grid
-dh = .3e-3*2
+dh = .3e-3*10
 
-zs_dipo = -500*unit
-ze_dipo = 500*unit
+zs_dipo = -500*unit/100
+ze_dipo = 500*unit/100
 r = 23.e-3
 h = 18.e-3
 
@@ -378,7 +389,7 @@ b_pass = 0
 perc = 10
 dict_out = {}
 original = sys.stdout
-text_trap = StringIO()
+text_trap = BytesIO()
 #sys.stdout = text_trap
 t0 = time.time()
 for n_step in range(tot_nsteps):
