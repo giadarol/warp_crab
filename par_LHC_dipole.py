@@ -23,7 +23,7 @@ unit = 1e-3
 ##########################
 
 # --- grid
-dh = .3e-3
+dh = .3e-3*2
 
 zs_dipo = -500*unit
 ze_dipo = 500*unit
@@ -229,7 +229,7 @@ pp = warp.ParticleScraper(sim.conductors,lsavecondid=1,lsaveintercept=1,lcollect
 ####################################
 
 def set_params_user(maxsec, matnum):
-    dict = parser.pos2dic('2.20.txt')
+    dict = parser.pos2dic('LHC_inj_72bx5.in')
 
     posC.matsurf = dict['matsurf']
     posC.iprob = dict['iprob']
@@ -285,7 +285,7 @@ step=pw.step
 if mysolver=='ES':
     print(pw.ave(beam.wspecies.getvz())/picmi.clight)
 #    pw.top.dt = pw.w3d.dz/pw.ave(beam.wspecies.getvz())
-    pw.top.dt = minnd([pw.w3d.dx,pw.w3d.dy,pw.w3d.dz])/clight
+    pw.top.dt = 25e-12 #minnd([pw.w3d.dx,pw.w3d.dy,pw.w3d.dz])/clight
 
 def myplots(l_force=0):
     if mysolver=='EM':  
