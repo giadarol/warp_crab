@@ -252,6 +252,12 @@ def measure_SEY(Ekin, Nmp, N_elec_p_mp, sey_params_dict,
     dict_out['xmesh']=solver.solver.xmesh.copy()
     dict_out['ymesh']=solver.solver.ymesh.copy()
     dict_out['zmesh']=solver.solver.zmesh.copy()
+    dict_out['mean_vx_emit'] = np.mean(secelec.wspecies.getvx())
+    dict_out['std_vx_emit'] = np.std(secelec.wspecies.getvx())
+    dict_out['mean_vy_emit'] = np.mean(secelec.wspecies.getvy())
+    dict_out['std_vy_emit'] = np.std(secelec.wspecies.getvy())
+    dict_out['mean_vz_emit'] = np.mean(secelec.wspecies.getvz())
+    dict_out['std_vz_emit'] = np.std(secelec.wspecies.getvz())
 
     #angle_dist =np.arctan(np.divide(secelec.wspecies.getvy(),secelec.wspecies.getvx()))
     #dict_out['angle_dist'] = angle_dist

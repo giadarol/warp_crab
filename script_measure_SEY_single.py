@@ -7,13 +7,34 @@ enable_trap = False
 
 R_sphere = 0.05
 
+# Complete low-energy test
+del_max = 1.8
 thetagen = 0.7*np.pi
 phigen = 1.2*np.pi
 xgen = 2e-2
 ygen = -1.e-2
 zgen = 0.5e-2
-
 ene = 0.5
+
+# Test on emission angle of the elatics
+del_max = 0.
+thetagen = 0.7*np.pi
+phigen = 1.2*np.pi
+xgen = 2e-2
+ygen = -1.e-2
+zgen = 0.5e-2
+ene = 0.5
+
+# Test on emission angle of the elatics
+del_max = 0.
+thetagen = 0.5*np.pi
+phigen = 0*np.pi
+xgen = 0e-2
+ygen = 0e-2
+zgen = 0e-2
+ene = 0.5
+check_emission_angle_elastics = True
+
 
 from run_in_separate_process import run_in_separate_process
 import sys
@@ -25,7 +46,7 @@ N_elec_p_mp = 1
 
 sey_params_dict={}
 sey_params_dict['Emax'] = 300.
-sey_params_dict['del_max'] = 1.8
+sey_params_dict['del_max'] = del_max
 sey_params_dict['R0'] = 0.7
 sey_params_dict['E_th'] = 30.
 sey_params_dict['sigmafit'] = 1.09
@@ -71,6 +92,18 @@ del_ref, _ = yield_fun2(E=np.array([ene]), costheta=1., s=1.35, E0=150,
 
 print('measured: %.3f, expected: %3f'%(res['SEY'], del_ref))
 
+if check_emission_angle_elastics:
+    vg = impact_info['vg']
+    in_imp = impact_info['in_impact']
+    vn = vn = np.dot(vg, in_imp)*in_imp
+    ve_ref = vg - 2 * vn
+    ve_meas = np.array([res['mean_v%s_emit'%dd] for dd in 'xyz'])
+    ve_std = np.array([res['std_v%s_emit'%dd] for dd in 'xyz'])
+
+    print('Standard deviations', ve_std)
+    print('vg:', vg)
+    print('ve_meas:', ve_meas)
+    print('ve_ref:', ve_ref)
 
 import matplotlib.pyplot as plt
 plt.close('all')
